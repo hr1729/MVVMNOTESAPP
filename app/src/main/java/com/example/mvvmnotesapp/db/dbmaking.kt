@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 @Database(entities = [User::class],version = 1)
 abstract class dbmaking:RoomDatabase() {
-    abstract class dao:Dao
+    abstract fun dao():Dao
     companion object{
         @Volatile
         var instance:dbmaking?=null
-        private const val DATABASE_NAME="User"
+        private const val DATABASE_NAME="userdata"
 
         fun getInstance(context: Context):dbmaking?
         {
