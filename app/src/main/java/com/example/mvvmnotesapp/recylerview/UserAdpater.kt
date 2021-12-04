@@ -36,7 +36,7 @@ class UserAdpater:RecyclerView.Adapter<UserAdpater.ViewHolder>() {
         val data=diff.currentList[position]
         holder.itemView.apply {
             name.text=data.name
-            age.text=data.age.toString()
+            age.text=data.age
         }
     }
 
