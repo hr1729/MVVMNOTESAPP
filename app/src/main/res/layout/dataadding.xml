@@ -19,21 +19,22 @@
         <EditText
             android:id="@+id/name1"
             android:layout_width="match_parent"
-            android:hint="Enter your name"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textColorHint="#fff"
+            android:hint="Enter your name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#fff"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/black"
+            android:textColorHint="#fff" />
+
         <EditText
             android:id="@+id/age1"
             android:layout_width="match_parent"
-            android:hint="Enter your age"
-            android:textColorHint="#fff"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:hint="Enter your age"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#fff"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/black"
+            android:textColorHint="#fff" />
 
         <Button
             android:id="@+id/save"

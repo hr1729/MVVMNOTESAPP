@@ -9,12 +9,12 @@ import com.example.mvvmnotesapp.repository.UserRepository
 class viewModel: ViewModel(){
     fun insert(context: Context, user: User)
     {
-        UserRepository.inserttheuser(user,context)
+        UserRepository.inserttheuser(context,user)
     }
 
     fun getAllUserData(context: Context): LiveData<List<User>>
     {
-        return UserRepository.getuserdata(context)!!
+        return UserRepository.getuserdata(context)
     }
 
 }

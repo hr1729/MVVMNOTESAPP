@@ -5,26 +5,34 @@ import android.provider.SyncStateContract.Helpers.insert
 import androidx.lifecycle.LiveData
 import com.example.mvvmnotesapp.db.User
 import com.example.mvvmnotesapp.db.dbmaking
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class UserRepository {
     companion object{
-        fun initalize(context: Context):dbmaking?{
-            return dbmaking?.getInstance(context)
-        }
-        fun inserttheuser(user: User,context: Context){
-            GlobalScope.launch(Dispatchers.IO) {
-                var db= initalize(context)
-                 db?.dao()?.insert(user)
+        var userDatabase:dbmaking?=null
 
+        private fun intialiseDB(context:Context): dbmaking?
+        {
+            return dbmaking.getInstance(context)!!
+        }
+
+        fun inserttheuser(context: Context,user:User)
+        {
+            userDatabase= intialiseDB(context)
+
+            CoroutineScope(IO).launch {
+                userDatabase!!.dao().insert(user)
             }
         }
 
-        fun getuserdata(context: Context): LiveData<List<User>>? {
-            var db= initalize(context)
-            return db?.dao()?.getalldata()
+        fun getuserdata(context: Context): LiveData<List<User>>
+        {
+            userDatabase= intialiseDB(context)
+            return userDatabase!!.dao().getalldata()
         }
     }
 }

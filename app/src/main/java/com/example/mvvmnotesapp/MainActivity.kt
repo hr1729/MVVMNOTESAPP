@@ -5,31 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvvmnotesapp.db.User
 import com.example.mvvmnotesapp.model.viewModel
 import com.example.mvvmnotesapp.recylerview.UserAdpater
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dataadding.view.*
-
 class MainActivity : AppCompatActivity() {
     lateinit var alertDialog: AlertDialog.Builder
     lateinit var dialog: AlertDialog
-    lateinit var adapter:UserAdpater
+    lateinit var adpater: UserAdpater
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-      val  viewModel=ViewModelProvider(this).get(viewModel::class.java)
+        val viewmodel=ViewModelProvider(this).get(viewModel::class.java)
         recyclerview()
-        viewModel.getAllUserData(this).observe(this, Observer {
-            adapter.diff?.submitList(it)
-        })
-
         floatingActionButton.setOnClickListener {
-            openDialog(viewModel)
+            openDialog(viewmodel)
         }
     }
     private fun openDialog(viewModel: viewModel){
@@ -39,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         dialog.setView(lyt)
         lyt.save.setOnClickListener {
             if(lyt.name1.text.isNotEmpty() and lyt.age1.text.isNotEmpty()){
-                val user= User(lyt.name1.text.toString(),lyt.age1.text.toString())
+                val name=lyt.name1.text.toString()
+                val age=lyt.age1.text.toString()
+                val user= User(name=name,age=age)
                 viewModel.insert(this,user)
             }
             else{
@@ -49,9 +43,6 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
     private fun recyclerview(){
-        adapter= UserAdpater()
-        rv.adapter=adapter
-        rv.layoutManager= LinearLayoutManager(this)
-
+        adpater=UserAdpater()
     }
 }
