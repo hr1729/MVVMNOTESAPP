@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvvmnotesapp.db.User
 import com.example.mvvmnotesapp.model.viewModel
 import com.example.mvvmnotesapp.recylerview.UserAdpater
@@ -20,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val viewmodel=ViewModelProvider(this).get(viewModel::class.java)
         recyclerview()
+        viewmodel.getAllUserData(this).observe(this, Observer {
+            adpater.diff?.submitList(it)
+        })
         floatingActionButton.setOnClickListener {
             openDialog(viewmodel)
         }
@@ -44,5 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun recyclerview(){
         adpater=UserAdpater()
+        rv.adapter=adpater
+        rv.layoutManager=LinearLayoutManager(this)
     }
 }
